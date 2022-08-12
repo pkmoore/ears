@@ -19,12 +19,15 @@ function verifySignature(req) {
 }
 
 app.post('/ears', async (req, res) => {
+    console.log("Caught webhook");
     req.setEncoding('utf8');
     // Intentionally lie when there is a bad signature
     if (!verifySignature(req)) {
+      console.log("Signature is bad!");
       res.status(200);
       res.send('Success');
     } else {
+      console.log("Signature is good...");
       // Check other stuff here
       // Check it is the master branch that has been updated
       childProcess.exec('/home/band-aid/deploy.sh');
